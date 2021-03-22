@@ -42,8 +42,8 @@ class NeuralNetwork:
         return self.__errors
 
     def study(self):
-        print("|", "k".ljust(3), "|", "W".ljust(36), "|", "y".ljust(18), "|", "E".ljust(3), "|")
-        print("+", "-" * 3, "+", "-" * 36, "+", "_" * 18, "+", "-" * 3)
+        print("|", "k".ljust(3), "|", "W".ljust(39), "|", "y".ljust(18), "|", "E".ljust(3), "|")
+        print("+", "-" * 3, "+", "-" * 39, "+", "-" * 18, "+", "-" * 3, "+")
         done = False
         epoch = 0
         while not done:
@@ -67,8 +67,8 @@ class NeuralNetwork:
 
             w_string = ', '.join([str("%.3f" % it) if it < 0 else str("%.4f" % it) for it in self.__weight])
             self.__errors.append([epoch, error])
-            print("|", str(epoch).ljust(3), "|",  str(w_string).ljust(36), "|", str(y).ljust(18), "|",
-                  str(error).ljust(3))
+            print("|", str(epoch).ljust(3), "|",  str(w_string).ljust(39), "|", str(y).ljust(18), "|",
+                  str(error).ljust(3), "|")
             if error == 0:
                 done = True
             epoch += 1
@@ -114,25 +114,25 @@ def start():
     ]
 
     print("Task 1", '\n')
-    print("+", "-" * 3, "+", "-" * 36, "+", "_" * 18, "+", "-" * 3)
+    print("+", "-" * 3, "+", "-" * 39, "+", "-" * 18, "+", "-" * 3, "+")
     nw1 = NeuralNetwork(True, 0.3, bFunc, generateX())
     nw1.study()
     printGraph(nw1.getErrors())
-    print("+", "-" * 3, "+", "-" * 36, "+", "_" * 18, "+", "-" * 3)
+    print("+", "-" * 3, "+", "-" * 39, "+", "-" * 18, "+", "-" * 3, "+")
 
     print("Task 2", '\n')
-    print("+", "-" * 3, "+", "-" * 36, "+", "_" * 18, "+", "-" * 3)
+    print("+", "-" * 3, "+", "-" * 39, "+", "-" * 18, "+", "-" * 3, "+")
     nw2 = NeuralNetwork(False, 0.3, bFunc, generateX())
     nw2.study()
     printGraph(nw2.getErrors())
-    print("+", "-" * 3, "+", "-" * 36, "+", "_" * 18, "+", "-" * 3)
+    print("+", "-" * 3, "+", "-" * 39, "+", "-" * 18, "+", "-" * 3, "+")
 
     print("Task 3", '\n')
-    print("+", "-" * 3, "+", "-" * 36, "+", "_" * 18, "+", "-" * 3)
+    print("+", "-" * 3, "+", "-" * 39, "+", "-" * 18, "+", "-" * 3, "+")
     nw3 = NeuralNetwork(False, 0.3, bFuncSelected, xSelected)
     nw3.study()
     printGraph(nw3.getErrors())
-    print("+", "-" * 3, "+", "-" * 36, "+", "_" * 18, "+", "-" * 3)
+    print("+", "-" * 3, "+", "-" * 39, "+", "-" * 18, "+", "-" * 3, "+")
 
 if __name__ == '__main__':
     start()
