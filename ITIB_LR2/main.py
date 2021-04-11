@@ -11,7 +11,7 @@ class NeuralNetwork:
         self.__b = b
         self.__p = p
         self.__M = M
-        self.__k = 0
+        self.__epoch = 0
         self.__weight = [0] * (p + 1)
         self.__x = []
         self.__y = []
@@ -40,18 +40,18 @@ class NeuralNetwork:
 
     def weightCorrect(self, sigma, i):
         for j in range(0, self.__p):
-            self.__weight[j + 1] = self.__weight[j + 1] + self.countDeltaWeight(sigma, self.__y[i + j])
+            self.__weight[j] = self.__weight[j] + self.countDeltaWeight(sigma, self.__y[i + j])
 
     def countDeltaWeight(self, sigma, y_j):
         return sigma * self.__eta * y_j
 
-    def countError(self, i):
-        for j in range(i, i + self.__p):
+    def countError(self):
+        for j in range(self.__N, 2 * self.__N):
             self.__error += (self.__realY[j] - self.__y[j]) ** 2
         self.__error = math.sqrt(self.__error)
 
     def study(self):
-        while self.__k < self.__M:
+        while self.__epoch < self.__M:
             self.__x.clear()
             self.__y.clear()
             self.__realY.clear()
@@ -60,14 +60,24 @@ class NeuralNetwork:
             self.generateY()
 
             for i in range(self.__p, self.__N):
-                self.__y.append(self.countNet(i - self.__p))
+                y = self.countNet(i - self.__p)
                 self.__x.append(self.__x[-1] + (abs(self.__b) + abs(self.__a)) / self.__N)
                 self.__realY.append(self.func(self.__x[i]))
 
-                self.weightCorrect(self.__realY[i] - self.__y[i], i - self.__p)
-                self.countError(i - self.__p)
+                self.weightCorrect(self.__realY[i] - y, i - self.__p)
+                self.__y.append(self.__realY[i])
 
-            self.__k += 1
+            self.__epoch += 1
+
+
+    def forecast(self):
+        for i in range(self.__N, 2 * self.__N):
+            self.__y.append(self.countNet(i - self.__p))
+            self.__x.append(self.__x[-1] + (abs(self.__b) + abs(self.__a)) / self.__N)
+            self.__realY.append(self.func(self.__x[i]))
+
+        self.countError()
+
 
     def getX(self):
         return self.__x
@@ -78,6 +88,9 @@ class NeuralNetwork:
     def getRealY(self):
         return self.__realY
 
+    def getError(self):
+        return self.__error
+
 
 def printGraph(x, y, realY):
     plot.plot(x, y, 'go-')
@@ -87,9 +100,21 @@ def printGraph(x, y, realY):
 
 
 def start():
-    nw = NeuralNetwork(1, 20, -5, 5, 4, 4000)
-    nw.study()
-    printGraph(nw.getX(), nw.getY(), nw.getRealY())
+    nw1 = NeuralNetwork(1, 20, -5, 5, 4, 500)
+    nw1.study()
+    nw1.forecast()
+    printGraph(nw1.getX(), nw1.getY(), nw1.getRealY())
+
+    print("Amount of epochs 500\n")
+    print("Error = ", nw1.getError(), "\n\n")
+
+    nw2 = NeuralNetwork(1, 20, -5, 5, 4, 2000)
+    nw2.study()
+    nw2.forecast()
+    printGraph(nw2.getX(), nw2.getY(), nw2.getRealY())
+
+    print("Amount of epochs 1500\n")
+    print("Error = ", nw2.getError(), "\n\n")
 
 
 if __name__ == '__main__':
