@@ -1,6 +1,5 @@
 import math
 import matplotlib.pyplot as plot
-import numpy
 
 
 class NeuralNetwork:
@@ -98,6 +97,11 @@ def printGraph(x, y, realY):
     plot.grid(True)
     plot.show()
 
+def printErrors(m, errors):
+    plot.plot(m, errors, 'ro-')
+    plot.grid(True)
+    plot.show()
+
 
 def start():
     nw1 = NeuralNetwork(1, 20, -5, 5, 4, 500)
@@ -115,6 +119,17 @@ def start():
 
     print("Amount of epochs 1500\n")
     print("Error = ", nw2.getError(), "\n\n")
+
+    errors = []
+    m = [i for i in range(500, 1500, 100)]
+
+    for i in range(len(m)):
+        nwE = NeuralNetwork(1, 20, -5, 5, 4, m[i])
+        nwE.study()
+        nwE.forecast()
+        errors.append(nwE.getError())
+
+    printErrors(m, errors)
 
 
 if __name__ == '__main__':
