@@ -68,7 +68,6 @@ class NeuralNetwork:
 
             self.__epoch += 1
 
-
     def forecast(self):
         for i in range(self.__N, 2 * self.__N):
             self.__y.append(self.countNet(i - self.__p))
@@ -76,7 +75,6 @@ class NeuralNetwork:
             self.__realY.append(self.func(self.__x[i]))
 
         self.countError()
-
 
     def getX(self):
         return self.__x
@@ -89,6 +87,9 @@ class NeuralNetwork:
 
     def getError(self):
         return self.__error
+
+    def getWeight(self):
+        return self.__weight
 
 
 def printGraph(x, y, realY):
@@ -109,16 +110,26 @@ def start():
     nw1.forecast()
     printGraph(nw1.getX(), nw1.getY(), nw1.getRealY())
 
-    print("Amount of epochs 500\n")
-    print("Error = ", nw1.getError(), "\n\n")
+    print("\nAmount of epochs 500")
+    print('+', '-' * 50, '+', sep='')
+    print("|", "error".ljust(6), "|", "W".ljust(39), "|")
+    print('+', '-' * 50, '+', sep='')
+    w_string = ', '.join([str("%.3f" % it) if it < 0 else str("%.4f" % it) for it in nw1.getWeight()])
+    print("|", str("%.4f" % nw1.getError()).ljust(5), "|", w_string.ljust(39), "|")
+    print('+', '-' * 50, '+', sep='')
 
     nw2 = NeuralNetwork(1, 20, -5, 5, 4, 2000)
     nw2.study()
     nw2.forecast()
     printGraph(nw2.getX(), nw2.getY(), nw2.getRealY())
 
-    print("Amount of epochs 1500\n")
-    print("Error = ", nw2.getError(), "\n\n")
+    print("\n\nAmount of epochs 1500")
+    print('+', '-' * 50, '+', sep='')
+    print("|", "error".ljust(6), "|", "W".ljust(39), "|")
+    print('+', '-' * 50, '+', sep='')
+    w_string = ', '.join([str("%.3f" % it) if it < 0 else str("%.4f" % it) for it in nw2.getWeight()])
+    print("|", str("%.4f" % nw2.getError()).ljust(5), "|", w_string.ljust(39), "|")
+    print('+', '-' * 50, '+', sep='')
 
     errors = []
     m = [i for i in range(500, 1500, 100)]
