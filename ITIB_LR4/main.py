@@ -94,12 +94,26 @@ class NeuralNetwork:
             self.count_epsilon()
             self.__all_epsilon.append(self.__epsilon)
 
-            print("|", str(self.__epoch).ljust(3),
+            f_w_string = ""
+            for i in range(self.__J):
+                f_w_string += "["
+                f_w_string += ', '.join([str("%.3f" % it) if it < 0 else str("%.4f" % it) for it in self.__first_w[i]])
+                f_w_string += "] "
+
+            s_w_string = ""
+            for i in range(self.__M):
+                s_w_string += "["
+                s_w_string += ', '.join([str("%.3f" % it) if it < 0 else str("%.4f" % it) for it in self.__second_w[i]])
+                s_w_string += "] "
+
+            print("|", str(self.__epoch).ljust(2),
                   "|", str(', '.join(str("%.3f" % it) for it in self.__second_out)).ljust(5),
+                  "|", str(f_w_string).ljust(34),
+                  "|", str(s_w_string).ljust(25),
                   "|", str("%.3f" % self.__epsilon).ljust(5), "|")
             done = self.__epsilon <= self.__target_epsilon
 
-        print("+", "-" * 3, "+", "-" * 5, "+", "-" * 5, "+")
+        print("+", "-" * 2, "+", "-" * 5, "+", "-" * 34, "+", "-" * 25, "+", "-" * 5, "+")
 
 
 def print_graph(errors, epoch):
@@ -112,9 +126,10 @@ def print_graph(errors, epoch):
 
 def start():
     print("Task Full", '\n')
-    print("+", "-" * 3, "+", "-" * 5, "+", "-" * 5, "+")
-    print("|", "k".ljust(3), "|", "y".ljust(5), "|", "E".ljust(5), "|")
-    print("+", "-" * 3, "+", "-" * 5, "+", "-" * 5, "+")
+    print("+", "-" * 2, "+", "-" * 5, "+", "-" * 34, "+", "-" * 25, "+",  "-" * 5, "+")
+    print("|", "k".ljust(2),  "|", "y".ljust(5), "|", "hidden weight".ljust(34), "|", "output weight".ljust(25),
+    "|",  "E".ljust(5), "|")
+    print("+", "-" * 2, "+", "-" * 5, "+", "-" * 34, "+", "-" * 25, "+",  "-" * 5, "+")
 
     nw = NeuralNetwork(0.5, [1, 2], [0.4], 1, 2, 1, 0.001)
     nw.study()
