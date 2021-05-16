@@ -1,4 +1,4 @@
-import math
+import tabulate as tab
 
 
 class NeuralNetwork:
@@ -39,10 +39,15 @@ class NeuralNetwork:
                     self.__matrix[j][k] = self.count_weight(j, k)
 
     def has_change(self, pred_result, result):
-        for i in range(len(result)):
+        for i in range(self.__matrix_size):
             if result[i] != pred_result[i]:
                 return False
         return True
+
+    def print_matrix(self):
+        print(tab.tabulate(self.__matrix))
+
+
 
     def recognize(self, sample):
         size = len(sample)
@@ -85,6 +90,8 @@ def start():
 
     nw = NeuralNetwork(3 * 5, x)
 
+    print("-" * 10, "Matrix", "-" * 10)
+    nw.print_matrix()
 
     print("-" * 10, "Sample one", "-" * 10)
     print_pattern(sample_one, 3, 5)
