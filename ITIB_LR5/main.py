@@ -66,18 +66,18 @@ def print_pattern(sample, raw, col):
             if sample[raw * i + j] == -1:
                 result += "   "
             else:
-                result += " * "
+                result += " # "
         result += "\n"
     print(result)
 
 
 def start():
 
-    sample_zero = [1,  1,  1, 1, -1,  1, 1, -1,  1, 1, -1,  1, 1,  1,  1]
+    sample_zero = [-1,  1,  -1, 1, -1,  1, 1, -1,  1, 1, -1,  1, -1,  1,  -1]
     sample_one = [-1,  1, -1, 1,  1, -1, -1,  1, -1, -1,  1, -1, 1,  1,  1]
     sample_eight = [1,  1,  1, 1, -1,  1, 1,  1,  1, 1, -1,  1, 1,  1,  1]
 
-    broken_sample_zero = [1,  -1,  1, 1, -1,  1, 1, -1,  1, 1, -1,  1, 1,  1,  1]
+    broken_sample_zero = [-1,  1,  -1, 1, -1,  1, 1, -1,  1, -1, -1,  1, -1,  1,  -1]
     broken_sample_one = [-1,  1, -1, 1,  1, -1, -1,  1, -1, -1,  -1, -1, 1, 1,  1]
     broken_sample_eight = [1,  1,  1, 1, 1,  1, 1,  1,  1, 1, 1,  1, 1,  1,  1]
 
